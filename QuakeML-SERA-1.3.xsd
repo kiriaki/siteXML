@@ -198,8 +198,8 @@ targetNamespace="http://www.orfeus-eu.org/xml/site/1" elementFormDefault="qualif
 
 	<xs:complexType name="CreationInfoType">
     	<xs:sequence>
-        	<xs:element name="author" minOccurs="0" maxOccurs="1" type="PersonType"/>
-        	<xs:element name="agency" minOccurs="0" maxOccurs="1" type="InstitutionType"/>
+        	<xs:element name="author" type="PersonType" minOccurs="0" maxOccurs="1"/>
+        	<xs:element name="agency" type="InstitutionType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="creationTime" type="xs:dateTime"/>
 		</xs:sequence>
     </xs:complexType>
@@ -335,23 +335,23 @@ targetNamespace="http://www.orfeus-eu.org/xml/site/1" elementFormDefault="qualif
   	<xs:complexType name="LayerGeometry">
     	<xs:sequence>
     		<xs:element name="layerTopDepth" type="RealQuantity"/>
-    		<xs:element name="layerBottomDepth" minOccurs="0" maxOccurs="1" type="RealQuantity"/>  <!-- Bottom depth may be missing for last layer -->
+    		<xs:element name="layerBottomDepth" type="RealQuantity" minOccurs="0" maxOccurs="1"/>  <!-- Bottom depth may be missing for last layer -->
 		</xs:sequence>
     </xs:complexType>
 	
 	<xs:complexType name="VelocityProfileData">
     	<xs:sequence>
-    		<xs:element name="velocityP" minOccurs="0" maxOccurs="1" type="RealQuantity"/>
-    		<xs:element name="velocityS" minOccurs="0" maxOccurs="1" type="RealQuantity"/>
-    		<xs:element name="density" minOccurs="0" maxOccurs="1" type="RealQuantity"/>
-    		<xs:element name="layerThickness" minOccurs="1" maxOccurs="1" type="LayerGeometry"/>
+    		<xs:element name="velocityP" type="RealQuantity" minOccurs="0" maxOccurs="1"/>
+    		<xs:element name="velocityS" type="RealQuantity" minOccurs="0" maxOccurs="1"/>
+    		<xs:element name="density" type="RealQuantity" minOccurs="0" maxOccurs="1"/>
+    		<xs:element name="layerThickness" type="LayerGeometry" minOccurs="1" maxOccurs="1"/>
 		</xs:sequence>
     </xs:complexType>
 
 	<xs:complexType name="VelocityProfile">
     	<xs:sequence>
         	<xs:element name="layerCount" type="CounterType"/>
-        	<xs:element name="velocityProfileData" minOccurs="1" maxOccurs="unbounded" type="VelocityProfileData"/>
+        	<xs:element name="velocityProfileData" type="VelocityProfileData" minOccurs="1" maxOccurs="unbounded"/>
       	</xs:sequence>
     	<xs:attribute name="publicID" use="required" type="ResourceIdentifier"/> 
 		<!-- We need a way to tell the preferred velocity profile.
@@ -418,7 +418,7 @@ targetNamespace="http://www.orfeus-eu.org/xml/site/1" elementFormDefault="qualif
 
 	<xs:complexType name="SiteDescriptionType">
 		<xs:sequence>
-			<xs:element name="station" type="xs:string"  minOccurs="0" maxOccurs="1" /> <!-- optional -->
+			<xs:element name="station" type="xs:string" minOccurs="0" maxOccurs="1" /> <!-- optional -->
 			<xs:element name="latitude" type="RealQuantity"/>		<!-- mandatory -->
 			<xs:element name="longitude" type="RealQuantity"/>	 <!-- mandatory -->
 			<xs:element name="altitude" type="RealQuantity" minOccurs="0" maxOccurs="1"/>
@@ -426,13 +426,13 @@ targetNamespace="http://www.orfeus-eu.org/xml/site/1" elementFormDefault="qualif
 			<xs:element name="maxDistanceFromStation" type="RealQuantity" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="siteMorphology" type="SiteMorphologyType" minOccurs="0" maxOccurs="1"/> <!-- Is this optional ? -->
 			<xs:element name="siteTopography" type="SiteTopographyType" minOccurs="0" maxOccurs="1"/>		<!-- Is this optional ? -->
-			<xs:element name="preferredSiteAnalysisID" type="ResourceIdentifier"> <!-- mandatory ?? -->
+			<xs:element name="preferredSiteAnalysisID" type="ResourceIdentifier"> <!-- mandatory ?? What if analysis is missing ? -->
 				<xs:annotation>
 					<xs:documentation>It is mandatory to select one Site Analysis object as the preferred.
 					The Overall Quality index of the Site Characterization will be calculated using the preferred analysis.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="preferredVelocityProfileID" type="ResourceIdentifier"> <!-- optional -->
+			<xs:element name="preferredVelocityProfileID" type="ResourceIdentifier"/> <!-- optional -->
 			<xs:element name="overallQindex" type="RealQuantity" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="comment" type="CommentType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -467,7 +467,7 @@ targetNamespace="http://www.orfeus-eu.org/xml/site/1" elementFormDefault="qualif
 			<xs:element name="cptLogsCount" type="CounterType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="boreholeLogsCount" type="CounterType" minOccurs="0" maxOccurs="1"/>
 			<!-- **************** VELOCITY PROFILE *********************** -->
-			<xs:element name="velocityProfile" minOccurs="0" maxOccurs="unbounded" type="VelocityProfile"/>
+			<xs:element name="velocityProfile" type="VelocityProfile" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="velocityProfileQindex1" type="RealQuantity" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="velocityProfileReference" type="ReferenceType" minOccurs="0" maxOccurs="1"/>
 			<!-- **************** VELOCITY PROFILE *********************** -->
@@ -508,7 +508,7 @@ targetNamespace="http://www.orfeus-eu.org/xml/site/1" elementFormDefault="qualif
 					</xs:annotation>
 				</xs:element>
 				<!--   ************** SITE CONDITION INDICATORS **********     -->
-				<xs:element name="siteCharacterizationParameters" minOccurs="0" maxOccurs="1" > <!-- optional ??? -->
+				<xs:element name="siteCharacterizationParameters" minOccurs="0" maxOccurs="1"> <!-- optional ??? -->
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="analysis" type="AnalysisType" minOccurs="0" maxOccurs="unbounded"> <!-- optional -->
